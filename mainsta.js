@@ -36,7 +36,7 @@ var option;
         await getScriptPromisify('https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0/echarts.min.js')
   
         const chart = echarts.init(this._root)
-        $.get('http://localhost:3000/beef_cuts_france.svg', function (svg) {
+        $.get('https://wyjuven.github.io/echart_beef/beef_cuts_france.svg', function (svg) {
           echarts.registerMap('beef_cuts_france', { svg: svg });
           option = {
             tooltip: {},
