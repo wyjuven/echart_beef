@@ -46,7 +46,7 @@ var option;
               min: 5,
               max: 100,
               orient: 'horizontal',
-              text: ['', 'Price'],
+              text: ['', '数量'],
               realtime: true,
               calculable: true,
               inRange: {
