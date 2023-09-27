@@ -43,8 +43,8 @@ var option;
             visualMap: {
               left: 'center',
               bottom: '10%',
-              min: 5,
-              max: 100,
+              min: 0,
+              max: 10000,
               orient: 'horizontal',
               text: ['', '数量'],
               realtime: true,
