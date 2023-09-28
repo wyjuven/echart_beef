@@ -55,7 +55,7 @@ var option;
             },
             series: [
               {
-                name: 'French Beef Cuts',
+                name: 'Beef Cuts',
                 type: 'map',
                 map: 'beef_cuts_france',
                 roam: true,
