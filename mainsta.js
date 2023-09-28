@@ -33,7 +33,7 @@ var option;
       }
   
       async render () {
-        await getScriptPromisify('https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0/echarts.min.js')
+        await getScriptPromisify('https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js')
   
         const chart = echarts.init(this._root)
         $.get('https://wyjuven.github.io/echart_beef/beef_cuts_france.svg', function (svg) {
