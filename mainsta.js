@@ -70,7 +70,7 @@ var option;
                   { name: '牛舌', value: 35 },
                   { name: '脸颊板', value: 15 },
                   { name: '前胸', value: 25 },
-                  { name: '前腱F2', value: 45 },
+                  { name: '前腱F1', value: 45 },
                   { name: '衣架牛排', value: 85 },
                   { name: '牛霖', value: 25 },
                   { name: '后腿嫩肩肉', value: 15 },
