@@ -30,13 +30,44 @@ var option;
         this._props = {}
   
         this.render()
+        this._selectedDataPoint = {}
+      }
+
+      getSelectedDataPoint () {
+        return this._selectedDataPoint
       }
   
-      async render () {
+      async render (resultSet) {
         await getScriptPromisify('https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js')
   
         const chart = echarts.init(this._root)
-        $.get('https://wyjuven.github.io/echart_beef/beef_cuts_france.svg', function (svg) {
+        const length=resultSet.length;
+
+        //取数据并设置MAP需要的数组
+        const labels = [];
+        const values = [];
+        for (var i=0; i<length;i++){
+    
+          var lab = resultSet[i]["Parts"].description;
+  
+          if (labels.indexOf(lab) === -1) {
+           labels.push(lab);
+           }
+  
+          var val = Number(resultSet[i]["@MeasureDimension"].rawValue);
+           values.push(val); 
+        }
+        //console.log("labels");
+        //console.log(labels);
+        //console.log(values);
+  
+        const data = values.map((label, index) => ({ value: label, name: labels[index] }));
+  
+        //console.log(data);
+
+        //传递数据
+
+        $.get('http://localhost:3000/beef_cuts_france.svg', function (svg) {
           echarts.registerMap('beef_cuts_france', { svg: svg });
           option = {
             tooltip: {},
@@ -46,7 +77,7 @@ var option;
               min: 0,
               max: 10000,
               orient: 'horizontal',
-              text: ['', '数量'],
+              text: ['', 'Price'],
               realtime: true,
               calculable: true,
               inRange: {
@@ -55,7 +86,7 @@ var option;
             },
             series: [
               {
-                name: 'Beef Cuts',
+                name: 'French Beef Cuts',
                 type: 'map',
                 map: 'beef_cuts_france',
                 roam: true,
@@ -65,44 +96,22 @@ var option;
                   }
                 },
                 selectedMode: false,
-                data: [
-                  { name: '牛尾', value: 1500 },
-                  { name: '牛舌', value: 3500 },
-                  { name: '脸颊板', value: 1500 },
-                  { name: '前胸', value: 2500 },
-                  { name: '前腱F1', value: 4500 },
-                  { name: '衣架牛排', value: 8500 },
-                  { name: '牛霖', value: 2500 },
-                  { name: '后腿嫩肩肉', value: 1500 },
-                  { name: '牛腿心', value: 5500 },
-                  { name: "下后腰脊肉", value: 2500 },
-                  { name: '小米龙', value: 6500 },
-                  { name: '尾龙扒', value: 4500 },
-                  { name: '牛五花', value: 8500 },
-                  { name: '牛腩', value: 3500 },
-                  { name: '膈肌', value: 7500 },
-                  { name: '牛小排', value: 6500 },
-                  { name: '后胸', value: 6500 },
-                  { name: '前腱F2', value: 8500 },
-                  { name: '去盖针扒', value: 7500 },
-                  { name: '西冷', value: 6500 },
-                  { name: '眼肉', value: 5500 },
-                  { name: '上脑', value: 4500 },
-                  { name: '牛颈', value: 8500 },
-                  { name: '牛内肩', value: 1500 },
-                  { name: '牛板腱', value: 6500 },
-                  { name: '保乐肩', value: 4500 },
-                  { name: '后腱H1', value: 8500 },
-                  { name: '臀腰肉心', value: 6500 },
-                  { name: '菲力', value: 9500 }
-                ]
+                data: data,
               }
             ]
           };
         
         chart.setOption(option)
       });
-      option && myChart.setOption(option);
+
+      chart.on('click',   (params)=> {
+        // https://echarts.apache.org/en/api.html#events.Mouse%20events
+        // console.log(params),
+        const { seriesIndex, seriesName, dataIndex, data, name } = params
+        this._selectedDataPoint = { seriesIndex, seriesName, dataIndex, data, name }
+        this.dispatchEvent(new Event('onClick'))
+      })
+      //option && myChart.setOption(option);
     }}
 
   customElements.define('com-standard-echarts', SamplePrepared)
