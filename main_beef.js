@@ -67,7 +67,7 @@ var option;
 
         //传递数据
 
-        $.get('http://localhost:3000/beef_cuts_france.svg', function (svg) {
+        $.get('https://wyjuven.github.io/echart_beef/beef_cuts_france.svg', function (svg) {
           echarts.registerMap('beef_cuts_france', { svg: svg });
           option = {
             tooltip: {},
@@ -77,7 +77,7 @@ var option;
               min: 0,
               max: 10000,
               orient: 'horizontal',
-              text: ['', 'Price'],
+              text: ['', '数量'],
               realtime: true,
               calculable: true,
               inRange: {
@@ -86,7 +86,7 @@ var option;
             },
             series: [
               {
-                name: 'French Beef Cuts',
+                name: 'Beef Cuts',
                 type: 'map',
                 map: 'beef_cuts_france',
                 roam: true,
